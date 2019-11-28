@@ -21,6 +21,8 @@ app.use(poweredByHandler)
 
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
 
+let nextMove;
+
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
   // NOTE: Do something here to start the game
@@ -30,8 +32,25 @@ app.post('/start', (request, response) => {
     color: '#DFFF00',
   }
 
+  nextMove = 'left';
+
   return response.json(data)
 })
+
+function generateNextMove() {
+  let lastMove = nextMove;
+  if (lastMove === 'up') {
+    nextMove = 'right';
+  } else if (lastMove === 'right') {
+    nextMove = 'down';
+  } else if (lastMove === 'down') {
+    nextMove = 'left'
+  } else {
+    nextMove = 'up';
+  }
+
+  return;
+}
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
@@ -39,8 +58,10 @@ app.post('/move', (request, response) => {
 
   // Response data
   const data = {
-    move: 'up', // one of: ['up','down','left','right']
+    move: nextMove, // one of: ['up','down','left','right']
   }
+
+  generateNextMove();
 
   return response.json(data)
 })
