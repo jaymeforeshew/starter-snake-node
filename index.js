@@ -172,8 +172,8 @@ function survivalMove(me) {
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // instantiate every turn. Previous state doesn't matter
-  // instantiateBoard();
-  // populateBoard(request.body.board, request.body.you);
+  instantiateBoard();
+  populateBoard(request.body.board, request.body.you);
 
   // const nextMove = generateNextMove();
   let nextMove = generateNextMove(request.body.you, request.body.board.food);
