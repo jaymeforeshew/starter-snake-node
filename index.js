@@ -37,7 +37,7 @@ app.post('/start', (request, response) => {
 
 let lastMove = 'left';
 
-function nextMove() {
+function generateNextMove() {
   if (lastMove === 'up') {
     return 'right';
   }
