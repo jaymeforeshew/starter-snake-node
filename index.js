@@ -111,7 +111,7 @@ function generateNextMove(me, food) {
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // instantiate every turn. Previous state doesn't matter
-  instantiateBoard();
+  // instantiateBoard();
   // populateBoard(request.body.board, request.body.you);
 
   const nextMove = generateNextMove();
