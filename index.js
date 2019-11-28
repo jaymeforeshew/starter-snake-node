@@ -9,8 +9,6 @@ const {
   poweredByHandler
 } = require('./handlers.js')
 
-const board = null;
-
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -50,7 +48,6 @@ function instantiateBoard() {
   return;
 }
 
-/*
 function populateBoard(thisBoard, me) {
   // food
   const foodLocations = thisBoard.food;
@@ -72,7 +69,7 @@ function populateBoard(thisBoard, me) {
   }
 
   return;
-}*/
+}
 
 let lastMove = 'left';
 function circle() {
