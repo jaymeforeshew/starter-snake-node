@@ -163,10 +163,10 @@ function survivalMove(me) {
   }
 
   if (board[x][y+1] === '0') {
-    return 'up';
+    return 'down';
   }
 
-  return 'down';
+  return 'up';
 }
 
 // Handle POST request to '/move'
