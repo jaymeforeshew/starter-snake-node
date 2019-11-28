@@ -149,7 +149,7 @@ function isMoveSafe(me, move) {
 
   return true;
 }
-/*
+
 function survivalMove(me) {
   let x = me.body[0].x;
   let y = me.body[0].y;
@@ -167,7 +167,7 @@ function survivalMove(me) {
   }
 
   return 'down';
-}*/
+}
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
@@ -180,7 +180,7 @@ app.post('/move', (request, response) => {
 
   if (!isMoveSafe(request.body.you, nextMove)) {
     // forget the food, just survive!
-    //nextMove = survivalMove(request.body.you);
+    nextMove = survivalMove(request.body.you);
   }
 
   // Response data
