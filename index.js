@@ -37,6 +37,7 @@ app.post('/start', (request, response) => {
   return response.json(data)
 })
 
+/*
 let board = null;
 function instantiateBoard() {
   board = new Array();
@@ -72,7 +73,9 @@ function populateBoard(thisBoard, me) {
 
   return;
 }
+*/
 
+let lastMove = 'left';
 function circle() {
   if (lastMove === 'up') {
     return 'right';
@@ -93,7 +96,6 @@ function circle() {
   return 'down';
 }
 
-let lastMove = 'left';
 function generateNextMove(me, food) {
   return circle();
   
