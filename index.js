@@ -50,15 +50,15 @@ function instantiateBoard() {
   return;
 }
 
-function populateBoard(board, me) {
+function populateBoard(thisBoard, me) {
   // food
-  const foodLocations = board.food;
+  const foodLocations = thisBoard.food;
   for (let foodLocation of foodLocations) {
     board[foodLocation.x][foodLocation.y] = 'food';
   }
 
   // other snakes
-  const snakes = board.snakes;
+  const snakes = thisBoard.snakes;
   for (let snake of snakes) {
     for(let coordinate of snake.body) {
       board[coordinate.x][coordinate.y] = 'snake';
@@ -73,8 +73,7 @@ function populateBoard(board, me) {
   return;
 }
 
-let lastMove = 'left';
-function generateNextMove() {
+function circle() {
   if (lastMove === 'up') {
     return 'right';
   }
@@ -92,6 +91,20 @@ function generateNextMove() {
   }
 
   return 'down';
+}
+
+let lastMove = 'left';
+function generateNextMove(me, food) {
+  return circle();
+  
+  /*
+  // find shortest valid path to a food
+  head_x = me.body[0].x
+  head_y = me.body[0].y
+
+  let min_food_x;
+  let min_food_y;
+  */
 }
 
 // Handle POST request to '/move'
