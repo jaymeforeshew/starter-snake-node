@@ -129,6 +129,46 @@ function generateNextMove(me, foods) {
   return 'up';
 }
 
+function isMoveSafe(me, move) {
+  let x = me.body[0].x;
+  let y = me.body[0].y;
+
+  if (move === 'right') {
+    x += 1;
+  } else if (move === 'left') {
+    x -= 1;
+  } else if (move === 'up') {
+    y += 1;
+  } else {
+    y -= 1;
+  }
+
+  if (board[x][y] != '0' || board[x][y] != 'food') {
+    return false;
+  }
+
+  return true;
+}
+
+function survivalMove(me) {
+  let x = me.body[0].x;
+  let y = me.body[0].y;
+
+  if (board[x+1][y] === '0') {
+    return 'right';
+  }
+
+  if (board[x-1][y] === '0') {
+    return 'left';
+  }
+
+  if (board[x][y+1] === '0') {
+    return 'up';
+  }
+
+  return 'down';
+}
+
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // instantiate every turn. Previous state doesn't matter
@@ -136,7 +176,12 @@ app.post('/move', (request, response) => {
   // populateBoard(request.body.board, request.body.you);
 
   // const nextMove = generateNextMove();
-  const nextMove = generateNextMove(request.body.you, request.body.board.food);
+  let nextMove = generateNextMove(request.body.you, request.body.board.food);
+
+  if (!isMoveSafe(request.body.you, nextMove)) {
+    // forget the food, just survive!
+    nextMove = survivalMove(request.body.you);
+  }
 
   // Response data
   const data = {
