@@ -138,9 +138,9 @@ function isMoveSafe(me, move) {
   } else if (move === 'left') {
     x -= 1;
   } else if (move === 'up') {
-    y += 1;
-  } else {
     y -= 1;
+  } else {
+    y += 1;
   }
 
   if (board[x][y] != '0' && board[x][y] != 'food') {
