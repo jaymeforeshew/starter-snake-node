@@ -92,17 +92,41 @@ function circle() {
   return 'down';
 }
 
-function generateNextMove(me, food) {
-  return circle();
+function generateNextMove(me, foods) {
+  // return circle();
   
-  /*
-  // find shortest valid path to a food
-  head_x = me.body[0].x
-  head_y = me.body[0].y
+  // find shortest path to a food
+  headX = me.body[0].x
+  headY = me.body[0].y
 
-  let min_food_x;
-  let min_food_y;
-  */
+  let x, y;
+  let minDistance = null;
+  
+  for (food of foods) {
+    const thisDistance = Math.abs(headX - food.x) + Math.abs(headY - food.y);
+
+    if (minDistance === null || thisDistance < minDistance) {
+      minDistance = thisDistance;
+      x = food.x;
+      y = food.y;
+    }
+  }
+
+  // move in the direction of closest food
+  // @TODO handle if it's in opposite direction
+  if (x < headX) {
+    return 'left';
+  }
+
+  if (x > headX) {
+    return 'right';
+  }
+
+  if (y < headY) {
+    return 'down';
+  }
+
+  return 'up';
 }
 
 // Handle POST request to '/move'
@@ -111,7 +135,8 @@ app.post('/move', (request, response) => {
   // instantiateBoard();
   // populateBoard(request.body.board, request.body.you);
 
-  const nextMove = generateNextMove();
+  // const nextMove = generateNextMove();
+  const nextMove = generateNextMove(request.body.you, request.body.board.food);
 
   // Response data
   const data = {
