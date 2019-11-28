@@ -37,7 +37,6 @@ app.post('/start', (request, response) => {
   return response.json(data)
 })
 
-/*
 let board = null;
 function instantiateBoard() {
   board = new Array();
@@ -51,6 +50,7 @@ function instantiateBoard() {
   return;
 }
 
+/*
 function populateBoard(thisBoard, me) {
   // food
   const foodLocations = thisBoard.food;
@@ -72,8 +72,7 @@ function populateBoard(thisBoard, me) {
   }
 
   return;
-}
-*/
+}*/
 
 let lastMove = 'left';
 function circle() {
@@ -112,7 +111,7 @@ function generateNextMove(me, food) {
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // instantiate every turn. Previous state doesn't matter
-  // instantiateBoard();
+  instantiateBoard();
   // populateBoard(request.body.board, request.body.you);
 
   const nextMove = generateNextMove();
