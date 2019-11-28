@@ -37,6 +37,7 @@ app.post('/start', (request, response) => {
   return response.json(data)
 })
 
+/*
 function generateNextMove() {
   let lastMove = nextMove;
   if (lastMove === 'up') {
@@ -51,6 +52,7 @@ function generateNextMove() {
 
   return;
 }
+*/
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
@@ -58,10 +60,10 @@ app.post('/move', (request, response) => {
 
   // Response data
   const data = {
-    move: nextMove, // one of: ['up','down','left','right']
+    move: 'left', // one of: ['up','down','left','right']
   }
 
-  generateNextMove();
+  //generateNextMove();
 
   return response.json(data)
 })
