@@ -122,7 +122,7 @@ function generateNextMove(me, foods) {
     return 'right';
   }
 
-  if (y < headY) {
+  if (y > headY) {
     return 'down';
   }
 
