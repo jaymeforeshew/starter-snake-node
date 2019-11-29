@@ -258,7 +258,7 @@ function optimise_directions(me, directions) {
 
 function survivalMove(me) {
   // SAFETY
-  // let directions = [];
+  let directions = [];
   // let direction = 'up';
   let x = me.body[0].x;
   let y = me.body[0].y;
@@ -270,18 +270,15 @@ function survivalMove(me) {
 
   if (x === 10) {
     if (move_down_is_safe) {
-      // directions.push('down');
-      return 'down';
+      directions.push('down');
     } else if (move_up_is_safe) {
-      // directions.push('up');
-      return 'up';
+      directions.push('up');
     } else {
-      // directions.push('left');
-      return 'left';
+      directions.push('left');
     }
 
-    // direction = optimise_directions(me, directions);
-    // return direction;
+    direction = optimise_directions(me, directions);
+    return direction;
   }
 
   if (x === 0) {
