@@ -251,6 +251,8 @@ function optimise_directions(me, directions) {
 */
   }
 
+  console.log("Only one direction <><><><><><><><><><><>");
+
   return directions[0];
 }
 
