@@ -266,14 +266,18 @@ function survivalMove(me) {
   const move_up_is_safe = isMoveSafe(me, 'up');
   const move_down_is_safe = isMoveSafe(me, 'down');
   const move_left_is_safe = isMoveSafe(me, 'left');
-  // const move_right_is_safe = isMoveSafe(me, 'right');
+  const move_right_is_safe = isMoveSafe(me, 'right');
 
   if (x === 10) {
     if (move_down_is_safe) {
       directions.push('down');
-    } else if (move_up_is_safe) {
+    }
+    
+    if (move_up_is_safe) {
       directions.push('up');
-    } else {
+    }
+
+    if (move_left_is_safe) {
       directions.push('left');
     }
 
@@ -283,69 +287,70 @@ function survivalMove(me) {
 
   if (x === 0) {
     if (move_up_is_safe) {
-      return 'up';
-      // directions.push('up');
-    } else if (move_down_is_safe) {
-      // directions.push('down');
-      return 'down';
-    } else {
-      // directions.push('right');
-      return 'right';
+      directions.push('up');
+    }
+    
+    if (move_down_is_safe) {
+      directions.push('down');
+      
     }
 
-    // direction = optimise_directions(me, directions);
-    // return direction;
+    if (move_right_is_safe) {
+      directions.push('right');
+    }
+
+    direction = optimise_directions(me, directions);
+    return direction;
   }
 
   if (y === 0) {
     if (isMoveSafe(me, 'right')) {
-      // directions.push('right');
-      return 'right';
-    } else if (move_left_is_safe) {
-      // directions.push('left');
-      return 'left';
-    } else {
-      // directions.push('down');
-      return 'down';
+      directions.push('right');
+    } 
+    
+    if (move_left_is_safe) {
+      directions.push('left');
+    }
+    
+    if (move_down_is_safe) {
+      directions.push('down');
     }
 
-    // direction = optimise_directions(me, directions);
-    // return direction;
+    direction = optimise_directions(me, directions);
+    return direction;
   }
 
   if (y === 10) {
     if (isMoveSafe(me, 'right')) {
-      // directions.push('right');
-      return 'right';
-    } else if (move_left_is_safe) {
-      // directions.push('left');
-      return 'left';
-    } else {
-      // directions.push('up');
-      return 'up';
+      directions.push('right');
+    } 
+    
+    if (move_left_is_safe) {
+      directions.push('left');
+    }
+    
+    if (move_up_is_safe) {
+      directions.push('up');
     }
 
-    // direction = optimise_directions(me, directions);
-    // return direction;
+    direction = optimise_directions(me, directions);
+    return direction;
   }
 
   if (board[x+1][y] === '0') {
-    // directions.push('right');
-    return 'right'
+    directions.push('right');
   }
 
   if (board[x-1][y] === '0') {
-    // directions.push('left');
-    return 'left'
+    directions.push('left');
   }
 
   if (board[x][y+1] === '0') {
-    // directions.push('down');
-    return 'down'
+    directions.push('down');
   }
 
-  //direction = optimise_directions(me, directions);
-  return 'up';
+  direction = optimise_directions(me, directions);
+  return direction;
 }
 
 // Handle POST request to '/move'
