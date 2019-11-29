@@ -71,6 +71,47 @@ function populateBoard(thisBoard, me) {
   return;
 }
 
+function countOpenInDirection(me, direction) {
+
+    let count = 0;
+
+    if (direction === 'left') {
+        for (let x = me.body[0].x - 1; x >= 0; x --) {
+        for (let y = 0; y < 11; y++) {
+            if (board[x][y] === '0') {
+            count += 1;
+            }
+        }
+        }
+    } else if (direction === 'right') {
+        for (let x = me.body[0].x + 1; x < 11; x++) {
+        for (let y = 0; y < 11; y++) {
+            if (board[x][y] === '0') {
+            count += 1;
+            }
+        }
+        }
+    } else if (direction === 'up') {
+        for(let y = me.body[0].y - 1; y >= 0; y--) {
+        for(let x = 0; x < 11; x++) {
+            if (board[x][y] === '0') {
+            count += 1;
+            }
+        }
+        }
+    } else { // down
+        for (let y = me.body[0].y + 1; y < 11; y++) {
+        for(let x = 0; x < 11; x++) {
+            if (board[x][y] === '0') {
+            count += 1;
+            }
+        }
+        }
+    }
+
+    return count;
+}
+
 let lastMove = 'left';
 function circle() {
   if (lastMove === 'up') {
@@ -84,7 +125,7 @@ function circle() {
   if (lastMove === 'down') {
     return 'left'
   }
-  
+
   if (lastMove === 'left') {
     return 'up';
   }
@@ -94,14 +135,14 @@ function circle() {
 
 function generateNextMove(me, foods) {
   // return circle();
-  
+
   // find shortest path to a food
   headX = me.body[0].x
   headY = me.body[0].y
 
   let x, y;
   let minDistance = null;
-  
+
   for (food of foods) {
     const thisDistance = Math.abs(headX - food.x) + Math.abs(headY - food.y);
 
@@ -143,6 +184,10 @@ function isMoveSafe(me, move) {
     y += 1;
   }
 
+  if(x > board.length || x < 0 || y > board.length || y < 0) {
+    return false
+  }
+
   if (board[x][y] != '0' && board[x][y] != 'food') {
     return false;
   }
@@ -150,22 +195,154 @@ function isMoveSafe(me, move) {
   return true;
 }
 
+function optimise_directions(me, directions) {
+  let x = me.body[0].x;
+  let y = me.body[0].y;
+  console.log("HERE")
+
+  if (directions.length > 1) {
+
+    // compare weights
+    count0 = countOpenInDirection(me, direction[0]);
+    count1 = countOpenInDirection(me, direction[1]);
+
+    if (count0 >= count1) return directions[0];
+    return directions[1];
+/*
+    console.log("HERE2")
+    direction = directions[1]
+    console.log(direction)
+    console.log(board)
+
+    if (direction === 'left') {
+      for (i = x-1; i >= 0; i-=1) {
+        if (board[i][y] === 'me') {
+          console.log("Saw Me")
+          return directions[0]
+        }
+      }
+    } else if (direction === 'right') {
+      for (i = x+1; i <= 10; i+=1) {
+        if (board[i][y] === 'me') {
+          console.log("Saw Me")
+          return directions[0]
+        }
+      }
+    } else if (direction === 'up') {
+      for (j = y-1; j >= 0; j-=1) {
+        if (board[x][j] === 'me') {
+          console.log("Saw Me")
+          return directions[0]
+        }
+      }
+    } else {
+      for (j = y+1; j <= 10; j+=1) {
+        if( board[x][j] === 'me') {
+          console.log("Saw Me")
+          return directions[0]
+        }
+      }
+    }
+
+    return direction[1];
+*/
+  }
+
+  return directions[0];
+}
+
 function survivalMove(me) {
+  // SAFETY
+  // let directions = [];
+  // let direction = 'up';
   let x = me.body[0].x;
   let y = me.body[0].y;
 
+  const move_up_is_safe = isMoveSafe(me, 'up');
+  const move_down_is_safe = isMoveSafe(me, 'down');
+  const move_left_is_safe = isMoveSafe(me, 'left');
+  // const move_right_is_safe = isMoveSafe(me, 'right');
+
+  if (x === 10) {
+    if (move_down_is_safe) {
+      // directions.push('down');
+      return 'down';
+    } else if (move_up_is_safe) {
+      // directions.push('up');
+      return 'up';
+    } else {
+      // directions.push('left');
+      return 'left';
+    }
+
+    // direction = optimise_directions(me, directions);
+    // return direction;
+  }
+
+  if (x === 0) {
+    if (move_up_is_safe) {
+      return 'up';
+      // directions.push('up');
+    } else if (move_down_is_safe) {
+      // directions.push('down');
+      return 'down';
+    } else {
+      // directions.push('right');
+      return 'right';
+    }
+
+    // direction = optimise_directions(me, directions);
+    // return direction;
+  }
+
+  if (y === 0) {
+    if (isMoveSafe(me, 'right')) {
+      // directions.push('right');
+      return 'right';
+    } else if (move_left_is_safe) {
+      // directions.push('left');
+      return 'left';
+    } else {
+      // directions.push('down');
+      return 'down';
+    }
+
+    // direction = optimise_directions(me, directions);
+    // return direction;
+  }
+
+  if (y === 10) {
+    if (isMoveSafe(me, 'right')) {
+      // directions.push('right');
+      return 'right';
+    } else if (move_left_is_safe) {
+      // directions.push('left');
+      return 'left';
+    } else {
+      // directions.push('up');
+      return 'up';
+    }
+
+    // direction = optimise_directions(me, directions);
+    // return direction;
+  }
+
   if (board[x+1][y] === '0') {
-    return 'right';
+    // directions.push('right');
+    return 'right'
   }
 
   if (board[x-1][y] === '0') {
-    return 'left';
+    // directions.push('left');
+    return 'left'
   }
 
   if (board[x][y+1] === '0') {
-    return 'down';
+    // directions.push('down');
+    return 'down'
   }
 
+  //direction = optimise_directions(me, directions);
   return 'up';
 }
 
