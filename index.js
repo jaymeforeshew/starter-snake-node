@@ -75,7 +75,7 @@ function countOpenInDirection(me, direction) {
 
     let count = 0;
 
-    if (direction === 'right') {
+    if (direction === 'left') {
         for (let x = me.body[0].x - 1; x >= 0; x --) {
         for (let y = 0; y < 11; y++) {
             if (board[x][y] === '0') {
@@ -83,7 +83,7 @@ function countOpenInDirection(me, direction) {
             }
         }
         }
-    } else if (direction === 'left') {
+    } else if (direction === 'right') {
         for (let x = me.body[0].x + 1; x < 11; x++) {
         for (let y = 0; y < 11; y++) {
             if (board[x][y] === '0') {
@@ -205,6 +205,9 @@ function optimise_directions(me, directions) {
     // compare weights
     count0 = countOpenInDirection(me, direction[0]);
     count1 = countOpenInDirection(me, direction[1]);
+
+    console.log("Count ", directions[0], ": ", count0);
+    console.log("Count ", directions[1], ": ", count1);
 
     if (count0 >= count1) return directions[0];
     return directions[1];
