@@ -75,7 +75,7 @@ function countOpenInDirection(me, direction) {
 
     let count = 0;
 
-    if (direction === 'left') {
+    if (direction === 'right') {
         for (let x = me.body[0].x - 1; x >= 0; x --) {
         for (let y = 0; y < 11; y++) {
             if (board[x][y] === '0') {
@@ -83,7 +83,7 @@ function countOpenInDirection(me, direction) {
             }
         }
         }
-    } else if (direction === 'right') {
+    } else if (direction === 'left') {
         for (let x = me.body[0].x + 1; x < 11; x++) {
         for (let y = 0; y < 11; y++) {
             if (board[x][y] === '0') {
